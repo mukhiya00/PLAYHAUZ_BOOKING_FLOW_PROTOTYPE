@@ -1,0 +1,382 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>PLAYHAUZ — Booking</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .flowWrap{padding: 110px 0 48px;}
+    .flowHead{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:18px;}
+    .flowHead h1{margin:0; font-size: clamp(26px, 3.2vw, 42px);}
+    .flowSub{color: rgba(243,245,255,.70); margin: 6px 0 0;}
+    .stepper{display:flex; gap:10px; flex-wrap:wrap;}
+    .pill{padding:8px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.18); color: rgba(243,245,255,.78); font-weight:800; font-size:12px;}
+    .pill.active{background: rgba(255,60,172,.14); border-color: rgba(255,60,172,.26);}
+    .grid2{display:grid; grid-template-columns: 1.1fr .9fr; gap: 16px;}
+    .panel{border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.18); backdrop-filter: blur(10px); border-radius: 20px; padding: 14px;}
+    .panel h2{margin: 0 0 10px; font-size: 18px;}
+    .optGrid{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px;}
+    .opt{cursor:pointer; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); border-radius: 16px; padding: 10px; transition: transform .15s ease, border-color .15s ease;}
+    .opt:hover{transform: translateY(-2px);}
+    .opt.active{border-color: rgba(43,134,197,.45); box-shadow: 0 0 0 4px rgba(43,134,197,.12);}
+    .opt small{display:block; color: rgba(243,245,255,.64); font-weight:700;}
+    .opt .price{margin-top:6px; font-weight:950;}
+    .miniImg{width:100%; height:120px; border-radius: 12px; object-fit: cover; border:1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.20);}
+    .cakeGrid{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px;}
+    .cake{cursor:pointer; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); border-radius: 16px; padding: 10px;}
+    .cake.active{border-color: rgba(255,60,172,.45); box-shadow: 0 0 0 4px rgba(255,60,172,.12);}
+    .cake img{width:100%; height:130px; object-fit: cover; border-radius: 12px; border:1px solid rgba(255,255,255,.10);}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap:10px;}
+    label{display:block; font-weight:900; font-size:12px; color: rgba(243,245,255,.72); margin:10px 0 6px;}
+    input, select, textarea{width:100%; padding: 12px 12px; border-radius: 14px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.16); color: rgba(243,245,255,.86); outline:none;}
+    textarea{min-height: 90px; resize: vertical;}
+    .actions{display:flex; gap:10px; justify-content:flex-end; margin-top:12px; flex-wrap:wrap;}
+    .btn2{padding: 12px 14px; border-radius: 14px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.16); color: rgba(243,245,255,.88); font-weight:950; cursor:pointer;}
+    .btn2.primary{background: linear-gradient(135deg, rgba(255,60,172,.85), rgba(43,134,197,.80)); border-color: rgba(255,255,255,.12);}
+    .summary{font-size:14px; color: rgba(243,245,255,.74); line-height:1.65;}
+    .summary b{color: rgba(243,245,255,.92);}
+    .note{color: rgba(243,245,255,.62); font-size: 12px; margin-top: 8px;}
+    .hidden{display:none !important;}
+    @media (max-width: 980px){.grid2{grid-template-columns: 1fr;} .optGrid{grid-template-columns: 1fr;} .cakeGrid{grid-template-columns: 1fr;} .row{grid-template-columns: 1fr;}}
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.webp" alt="PLAYHAUZ" style="height:28px; width:auto;">
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#categories">Experiences</a>
+        <a href="booking.html" class="active">Booking</a>
+      </nav>
+      <a class="book-btn" href="booking.html">Book Now</a>
+    </div>
+  </header>
+
+  <main class="flowWrap">
+    <div class="container">
+      <div class="flowHead">
+        <div>
+          <h1>Booking — <span style="background:linear-gradient(135deg, #ff3cac, #2b86c5); -webkit-background-clip:text; color:transparent;">Memories Experience</span></h1>
+          <p class="flowSub">Choose your zone, select room style, add cake + decor, then generate a token receipt.</p>
+        </div>
+        <div class="stepper">
+          <div class="pill active" data-step-pill="1">1. Zone</div>
+          <div class="pill" data-step-pill="2">2. Room</div>
+          <div class="pill" data-step-pill="3">3. Add-ons</div>
+          <div class="pill" data-step-pill="4">4. Details</div>
+          <div class="pill" data-step-pill="5">5. Confirm</div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <section class="panel" id="step1">
+          <h2>1) Select Zone</h2>
+          <div class="optGrid" id="zoneGrid">
+            <div class="opt active" data-zone="celebrations">
+              <img class="miniImg" src="assets/celebration.webp" alt="Celebrations"/>
+              <div style="margin-top:8px; font-weight:950;">🎉 Celebrations</div>
+              <small>Birthdays • Proposal / Dinner • Cloud Walk</small>
+            </div>
+            <div class="opt" data-zone="gaming">
+              <img class="miniImg" src="assets/vr-room.webp" alt="Gaming"/>
+              <div style="margin-top:8px; font-weight:950;">🎮 Gaming</div>
+              <small>Simulation / VR • Multiplayer</small>
+            </div>
+            <div class="opt" data-zone="entertainment">
+              <img class="miniImg" src="assets/standup.webp" alt="Entertainment"/>
+              <div style="margin-top:8px; font-weight:950;">🎬 Entertainment</div>
+              <small>Private Screening • Standup • Sports</small>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn2 primary" data-next="2">Next →</button>
+          </div>
+        </section>
+
+        <aside class="panel" id="sidePreview">
+          <h2>Live Preview</h2>
+          <div class="summary" id="liveSummary"></div>
+          <div class="note">
+            ⚠️ This is a front-end prototype. Real payment + automatic email needs a service (EmailJS/Formspree/Backend).
+          </div>
+        </aside>
+
+        <section class="panel hidden" id="step2">
+          <h2>2) Select Room Type</h2>
+          <div class="optGrid" id="roomGrid">
+            <div class="opt active" data-room="basic">
+              <div style="font-weight:950;">Basic</div>
+              <small>Clean setup</small>
+              <div class="price">₹ 000</div>
+            </div>
+            <div class="opt" data-room="premium">
+              <div style="font-weight:950;">Premium</div>
+              <small>Extra lights + props</small>
+              <div class="price">₹ 000</div>
+            </div>
+            <div class="opt" data-room="high">
+              <div style="font-weight:950;">High</div>
+              <small>Cinematic + max decor</small>
+              <div class="price">₹ 000</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn2" data-back="1">← Back</button>
+            <button class="btn2 primary" data-next="3">Next →</button>
+          </div>
+        </section>
+
+        <section class="panel hidden" id="step3">
+          <h2>3) Add-ons (Cake + Decor)</h2>
+          <p class="note" style="margin-top:0;">Pick a cake design (optional) + choose decor options.</p>
+
+          <label>Choose Cake (optional)</label>
+          <div class="cakeGrid" id="cakeGrid">
+            <div class="cake active" data-cake="none">
+              <img src="assets/cake1.svg" alt="No cake"/>
+              <div style="margin-top:8px; font-weight:950;">No Cake</div>
+              <small>₹ 000</small>
+            </div>
+            <div class="cake" data-cake="cake1">
+              <img src="assets/cake1.svg" alt="Cake 1"/>
+              <div style="margin-top:8px; font-weight:950;">Cake A</div>
+              <small>₹ 000</small>
+            </div>
+            <div class="cake" data-cake="cake2">
+              <img src="assets/cake2.svg" alt="Cake 2"/>
+              <div style="margin-top:8px; font-weight:950;">Cake B</div>
+              <small>₹ 000</small>
+            </div>
+            <div class="cake" data-cake="cake3">
+              <img src="assets/cake3.svg" alt="Cake 3"/>
+              <div style="margin-top:8px; font-weight:950;">Cake C</div>
+              <small>₹ 000</small>
+            </div>
+          </div>
+
+          <label>Decor Options</label>
+          <div class="row">
+            <select id="decorTheme">
+              <option value="none">No decor (₹ 000)</option>
+              <option value="basic">Basic Decor (₹ 000)</option>
+              <option value="premium">Premium Decor (₹ 000)</option>
+              <option value="cinematic">Cinematic Decor (₹ 000)</option>
+            </select>
+            <select id="selfiePoint">
+              <option value="yes">Include Selfie Point ✅ (₹ 000)</option>
+              <option value="no">No Selfie Point (₹ 000)</option>
+            </select>
+          </div>
+
+          <div class="actions">
+            <button class="btn2" data-back="2">← Back</button>
+            <button class="btn2 primary" data-next="4">Next →</button>
+          </div>
+        </section>
+
+        <section class="panel hidden" id="step4">
+          <h2>4) Booking Details</h2>
+          <div class="row">
+            <div>
+              <label>Your Name</label>
+              <input id="name" placeholder="Enter name"/>
+            </div>
+            <div>
+              <label>Email (for confirmation)</label>
+              <input id="email" placeholder="Enter email"/>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Date</label>
+              <input id="date" type="date"/>
+            </div>
+            <div>
+              <label>Guests</label>
+              <select id="guests">
+                <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+              </select>
+            </div>
+          </div>
+          <label>Custom Notes (optional)</label>
+          <textarea id="notes" placeholder="e.g., balloon colors, message on cake, favorite game, etc."></textarea>
+          <div class="actions">
+            <button class="btn2" data-back="3">← Back</button>
+            <button class="btn2 primary" data-next="5">Next →</button>
+          </div>
+        </section>
+
+        <section class="panel hidden" id="step5">
+          <h2>5) Confirm & Generate Token</h2>
+          <div class="summary" id="finalSummary"></div>
+          <div class="actions">
+            <button class="btn2" data-back="4">← Back</button>
+            <button class="btn2 primary" id="confirmBtn">Confirm Booking (₹ 000)</button>
+          </div>
+          <div class="note">
+            Payment + automatic email integration placeholder. After confirm, you’ll get a token receipt on the next page.
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    (function() {
+      const state = {
+        zone: "celebrations",
+        room: "basic",
+        cake: "none",
+        decor: "none",
+        selfie: "yes",
+        name: "",
+        email: "",
+        date: "",
+        guests: "2",
+        notes: ""
+      };
+
+      const qp = new URLSearchParams(location.search);
+      const z = qp.get("zone");
+      if (z && ["celebrations","gaming","entertainment"].includes(z)) state.zone = z;
+
+      const steps = [1,2,3,4,5];
+      const stepEls = Object.fromEntries(steps.map(s => [s, document.getElementById("step"+s)]));
+      const pills = Array.from(document.querySelectorAll("[data-step-pill]"));
+      const zoneGrid = document.getElementById("zoneGrid");
+      const roomGrid = document.getElementById("roomGrid");
+      const cakeGrid = document.getElementById("cakeGrid");
+      const decorTheme = document.getElementById("decorTheme");
+      const selfiePoint = document.getElementById("selfiePoint");
+
+      const liveSummary = document.getElementById("liveSummary");
+      const finalSummary = document.getElementById("finalSummary");
+
+      function prettyZone(z) {
+        if (z==="celebrations") return "🎉 Celebrations";
+        if (z==="gaming") return "🎮 Gaming";
+        return "🎬 Entertainment";
+      }
+      function prettyRoom(r) {
+        if (r==="basic") return "Basic";
+        if (r==="premium") return "Premium";
+        return "High";
+      }
+      function prettyCake(c) {
+        if (c==="none") return "No Cake";
+        if (c==="cake1") return "Cake A";
+        if (c==="cake2") return "Cake B";
+        return "Cake C";
+      }
+
+      function renderSummary(target) {
+        const html = `
+          <div><b>Zone:</b> ${prettyZone(state.zone)}</div>
+          <div><b>Room:</b> ${prettyRoom(state.room)} (₹ 000)</div>
+          <div><b>Cake:</b> ${prettyCake(state.cake)} (₹ 000)</div>
+          <div><b>Decor:</b> ${state.decor} (₹ 000)</div>
+          <div><b>Selfie Point:</b> ${state.selfie === "yes" ? "Yes" : "No"} (₹ 000)</div>
+          <hr style="border:0; border-top:1px solid rgba(255,255,255,.10); margin:10px 0;">
+          <div><b>Name:</b> ${state.name || "—"}</div>
+          <div><b>Email:</b> ${state.email || "—"}</div>
+          <div><b>Date:</b> ${state.date || "—"}</div>
+          <div><b>Guests:</b> ${state.guests}</div>
+          <div><b>Notes:</b> ${state.notes ? state.notes.replaceAll("<","&lt;") : "—"}</div>
+          <div style="margin-top:10px; font-weight:950;">Total: ₹ 000</div>
+        `;
+        target.innerHTML = html;
+      }
+
+      function showStep(n) {
+        steps.forEach(s => stepEls[s].classList.toggle("hidden", s !== n));
+        pills.forEach(p => p.classList.toggle("active", p.dataset.stepPill == n));
+        if (n === 5) renderSummary(finalSummary);
+      }
+
+      // init selection UI based on state
+      zoneGrid.querySelectorAll(".opt").forEach(el => {
+        if (el.dataset.zone === state.zone) el.classList.add("active");
+        el.addEventListener("click", () => {
+          zoneGrid.querySelectorAll(".opt").forEach(x=>x.classList.remove("active"));
+          el.classList.add("active");
+          state.zone = el.dataset.zone;
+          renderSummary(liveSummary);
+        });
+      });
+      roomGrid.querySelectorAll(".opt").forEach(el => {
+        if (el.dataset.room === state.room) el.classList.add("active");
+        el.addEventListener("click", () => {
+          roomGrid.querySelectorAll(".opt").forEach(x=>x.classList.remove("active"));
+          el.classList.add("active");
+          state.room = el.dataset.room;
+          renderSummary(liveSummary);
+        });
+      });
+      cakeGrid.querySelectorAll(".cake").forEach(el => {
+        if (el.dataset.cake === state.cake) el.classList.add("active");
+        el.addEventListener("click", () => {
+          cakeGrid.querySelectorAll(".cake").forEach(x=>x.classList.remove("active"));
+          el.classList.add("active");
+          state.cake = el.dataset.cake;
+          renderSummary(liveSummary);
+        });
+      });
+
+      decorTheme.addEventListener("change", ()=>{ state.decor = decorTheme.value; renderSummary(liveSummary); });
+      selfiePoint.addEventListener("change", ()=>{ state.selfie = selfiePoint.value; renderSummary(liveSummary); });
+
+      const nameI = document.getElementById("name");
+      const emailI = document.getElementById("email");
+      const dateI = document.getElementById("date");
+      const guestsI = document.getElementById("guests");
+      const notesI = document.getElementById("notes");
+
+      [nameI,emailI,dateI,guestsI,notesI].forEach(el => {
+        el.addEventListener("input", ()=>{
+          state.name = nameI.value.trim();
+          state.email = emailI.value.trim();
+          state.date = dateI.value;
+          state.guests = guestsI.value;
+          state.notes = notesI.value.trim();
+          renderSummary(liveSummary);
+        });
+      });
+
+      document.querySelectorAll("[data-next]").forEach(btn => {
+        btn.addEventListener("click", ()=> showStep(parseInt(btn.dataset.next,10)));
+      });
+      document.querySelectorAll("[data-back]").forEach(btn => {
+        btn.addEventListener("click", ()=> showStep(parseInt(btn.dataset.back,10)));
+      });
+
+      function genToken() {
+        const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+        let t = "PH-";
+        for (let i=0;i<8;i++) t += chars[Math.floor(Math.random()*chars.length)];
+        return t;
+      }
+
+      document.getElementById("confirmBtn").addEventListener("click", ()=>{
+        if (!state.name) return alert("Name required");
+        if (!state.email || !state.email.includes("@")) return alert("Valid email required");
+        if (!state.date) return alert("Date required");
+
+        const token = genToken();
+        const booking = {...state, token, total: "000", createdAt: new Date().toISOString() };
+        localStorage.setItem("playhauz_last_booking", JSON.stringify(booking));
+        location.href = "receipt.html";
+      });
+
+      renderSummary(liveSummary);
+      showStep(1);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>PLAYHAUZ — Receipt</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .rWrap{padding: 110px 0 60px;}
+    .card{border:1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.18); backdrop-filter: blur(10px); border-radius: 22px; padding: 18px;}
+    .token{font-size: 28px; font-weight: 950; letter-spacing: .08em; margin: 6px 0 14px;}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap: 12px;}
+    .kv{border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.05); border-radius: 16px; padding: 12px;}
+    .kv b{display:block; font-size:12px; color: rgba(243,245,255,.68); text-transform: uppercase; letter-spacing:.08em;}
+    .kv span{display:block; margin-top:6px; font-weight: 900;}
+    .btnRow{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; margin-top: 12px;}
+    .btn2{padding: 12px 14px; border-radius: 14px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.16); color: rgba(243,245,255,.88); font-weight:950; cursor:pointer;}
+    .btn2.primary{background: linear-gradient(135deg, rgba(255,60,172,.85), rgba(43,134,197,.80)); border-color: rgba(255,255,255,.12);}
+    @media (max-width: 980px){.row{grid-template-columns: 1fr;}}
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo.webp" alt="PLAYHAUZ" style="height:28px; width:auto;">
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="booking.html">Booking</a>
+      </nav>
+      <a class="book-btn" href="booking.html">Book Again</a>
+    </div>
+  </header>
+
+  <main class="rWrap">
+    <div class="container">
+      <div class="card">
+        <h1 style="margin:0;">Booking Confirmed ✅</h1>
+        <p style="color: rgba(243,245,255,.72); margin: 6px 0 0;">Here is your token receipt.</p>
+
+        <div class="token" id="token">PH-XXXXXXXX</div>
+
+        <div class="row" id="grid"></div>
+
+        <div class="btnRow">
+          <button class="btn2" id="download">Download Receipt</button>
+          <button class="btn2 primary" id="emailMe">Email (mailto)</button>
+        </div>
+
+        <p style="margin:12px 0 0; color: rgba(243,245,255,.62); font-size: 12px;">
+          Automatic email + payment needs integration (EmailJS/Formspree/Backend). This page shows the flow + token.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("playhauz_last_booking") || "null");
+    if(!data) {
+      document.getElementById("token").textContent = "No booking found";
+    } else {
+      document.getElementById("token").textContent = data.token;
+      const kvs = [
+        ["Zone", data.zone],
+        ["Room", data.room],
+        ["Cake", data.cake],
+        ["Decor", data.decor],
+        ["Selfie Point", data.selfie],
+        ["Name", data.name],
+        ["Email", data.email],
+        ["Date", data.date],
+        ["Guests", data.guests],
+        ["Notes", data.notes || "—"],
+        ["Total", "₹ 000"],
+        ["Created", new Date(data.createdAt).toLocaleString()]
+      ];
+      const grid = document.getElementById("grid");
+      grid.innerHTML = kvs.map(([k,v]) => `
+        <div class="kv"><b>${k}</b><span>${String(v).replaceAll("<","&lt;")}</span></div>
+      `).join("");
+    }
+
+    document.getElementById("download").addEventListener("click", ()=>{
+      const data = JSON.parse(localStorage.getItem("playhauz_last_booking") || "null");
+      if(!data) return;
+      const lines = [
+        "PLAYHAUZ — Token Receipt",
+        "=======================",
+        "Token: " + data.token,
+        "Zone: " + data.zone,
+        "Room: " + data.room,
+        "Cake: " + data.cake,
+        "Decor: " + data.decor,
+        "Selfie Point: " + data.selfie,
+        "Name: " + data.name,
+        "Email: " + data.email,
+        "Date: " + data.date,
+        "Guests: " + data.guests,
+        "Notes: " + (data.notes || "-"),
+        "Total: ₹ 000",
+        "CreatedAt: " + data.createdAt
+      ].join("\n");
+      const blob = new Blob([lines], {type:"text/plain"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "PLAYHAUZ_RECEIPT_" + data.token + ".txt";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    document.getElementById("emailMe").addEventListener("click", ()=>{
+      const data = JSON.parse(localStorage.getItem("playhauz_last_booking") || "null");
+      if(!data) return;
+      const subject = encodeURIComponent("PLAYHAUZ Booking Confirmation — " + data.token);
+      const body = encodeURIComponent(
+        `Token: ${data.token}\nZone: ${data.zone}\nRoom: ${data.room}\nDate: ${data.date}\nGuests: ${data.guests}\nTotal: ₹ 000\n\nNotes: ${data.notes||""}`
+      );
+      window.location.href = `mailto:${encodeURIComponent(data.email)}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>

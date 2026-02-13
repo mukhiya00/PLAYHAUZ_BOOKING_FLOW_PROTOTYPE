@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PLAYHAUZ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Glitch BG -->
+  <div class="bg-glitch" aria-hidden="true">
+    <div class="scanlines"></div>
+    <div class="sparks" id="sparks"></div>
+    <div class="chromatic"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <img class="logo" src="assets/logo.webp" alt="PLAYHAUZ logo" />
+      <div class="brandText">
+        <div class="name glitch" data-text="PLAYHAUZ">PLAYHAUZ</div>
+        <div class="tag">Celebrate • Play • Experience</div>
+      </div>
+    </div>
+    <a class="cta" href="booking.html">Book Now</a>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="heroLeft">
+        <h1>Premium <span class="accent">Memories Experience</span> in one place.</h1>
+        <p>
+          Birthdays, proposals, private screenings, VR, racing simulators, multiplayer gaming,
+          standup comedy, seminars, and more — all with a neon glitch vibe.
+        </p>
+        <div class="heroBtns">
+          <a class="btn primary" href="#packages">Explore Packages</a>
+          <a class="btn ghost" href="booking.html">Quick Booking</a>
+        </div>
+        <div class="chips">
+          <span class="chip">🎉 Celebrations</span>
+          <span class="chip">🎮 Gaming</span>
+          <span class="chip">🎭 Entertainment</span>
+          <span class="chip">📸 Selfie Point</span>
+        </div>
+      </div>
+
+      <div class="heroRight">
+        <div class="glassCard">
+          <div class="glassTitle">Today’s Highlights</div>
+          <div class="miniGrid">
+            <div class="miniItem">
+              <div class="miniIcon">🕶</div>
+              <div>
+                <div class="miniTitle">VR Arena</div>
+                <div class="miniSub">Immersive play</div>
+              </div>
+            </div>
+            <div class="miniItem">
+              <div class="miniIcon">🏎</div>
+              <div>
+                <div class="miniTitle">Racing Sim</div>
+                <div class="miniSub">Steering wheel</div>
+              </div>
+            </div>
+            <div class="miniItem">
+              <div class="miniIcon">🎬</div>
+              <div>
+                <div class="miniTitle">Private Cinema</div>
+                <div class="miniSub">Your show</div>
+              </div>
+            </div>
+            <div class="miniItem">
+              <div class="miniIcon">🎤</div>
+              <div>
+                <div class="miniTitle">Standup</div>
+                <div class="miniSub">Live nights</div>
+              </div>
+            </div>
+          </div>
+          <div class="glassFoot">* Details can be changed later.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="packages" class="section">
+      <div class="sectionHead">
+        <h2>Packages</h2>
+        <p>3 main zones — each card has smooth auto-scrolling images.</p>
+      </div>
+
+      <div class="cards">
+        <!-- Celebrations -->
+        <article class="card neon warm">
+          <div class="cardHead">
+            <div>
+              <div class="cardTitle">🎉 Celebrations</div>
+              <div class="cardSub">Birthday • Proposal/Dinner • Private Screening</div>
+            </div>
+            <a class="pill" href="booking.html">Book</a>
+          </div>
+
+          <div class="marquee" data-speed="26">
+            <div class="track">
+              <img src="assets/birthday_celebration.webp" alt="Birthday celebration room" />
+              <img src="assets/candle_light.webp" alt="Candle light setup" />
+              <img src="assets/cinema_room.webp" alt="Private cinema room" />
+              <img src="assets/cinema_character.webp" alt="Cinema character" />
+            </div>
+          </div>
+
+          <ul class="bullets">
+            <li>Decor + cake + music options</li>
+            <li>Warm golden vibe + fog style</li>
+            <li>Private movie screening</li>
+          </ul>
+        </article>
+
+        <!-- Gaming -->
+        <article class="card neon red">
+          <div class="cardHead">
+            <div>
+              <div class="cardTitle">🎮 Gaming Zone</div>
+              <div class="cardSub">VR • Racing Sim • Multiplayer</div>
+            </div>
+            <a class="pill" href="booking.html">Book</a>
+          </div>
+
+          <div class="marquee" data-speed="22">
+            <div class="track">
+              <img src="assets/vr_room.webp" alt="VR room" />
+              <img src="assets/racing_sim.webp" alt="Racing simulator" />
+              <img src="assets/gaming_character.webp" alt="Gaming characters" />
+            </div>
+          </div>
+
+          <ul class="bullets">
+            <li>VR experience + simulation</li>
+            <li>Steering wheel racing rigs</li>
+            <li>Multiplayer & competitive vibes</li>
+          </ul>
+        </article>
+
+        <!-- Entertainment -->
+        <article class="card neon violet">
+          <div class="cardHead">
+            <div>
+              <div class="cardTitle">🎭 Entertainment</div>
+              <div class="cardSub">Standup • Seminars • Cloud Walk • Selfie Point</div>
+            </div>
+            <a class="pill" href="booking.html">Book</a>
+          </div>
+
+          <div class="marquee" data-speed="24">
+            <div class="track">
+              <img src="assets/stage.webp" alt="Stage for standup comedy" />
+              <img src="assets/cloud_walk.webp" alt="Cloud walk with smoke" />
+              <img src="assets/selfie_point.webp" alt="Selfie point" />
+            </div>
+          </div>
+
+          <ul class="bullets">
+            <li>Standup / open mic vibe</li>
+            <li>Cloud walk entry (fog floor)</li>
+            <li>Selfie point + neon stage</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="booking" class="section booking">
+      <div class="sectionHead">
+        <h2>Quick Booking</h2>
+        <p>Placeholder details — you can edit later.</p>
+      </div>
+
+      <form class="form" onsubmit="return false;">
+        <div class="row">
+          <label>
+            Name
+            <input placeholder="Your name" />
+          </label>
+          <label>
+            Phone
+            <input placeholder="00000 00000" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Package
+            <select>
+              <option>Celebrations</option>
+              <option>Gaming Zone</option>
+              <option>Entertainment</option>
+            </select>
+          </label>
+          <label>
+            Date & Time
+            <input placeholder="DD/MM • HH:MM" />
+          </label>
+        </div>
+
+        <label>
+          Notes
+          <textarea rows="4" placeholder="Birthday / proposal / VR / standup details..."></textarea>
+        </label>
+
+        <div class="actions">
+          <button class="btn primary" type="submit">Request Booking</button>
+          <button class="btn ghost" type="button" onclick="window.scrollTo({top:0, behavior:'smooth'})">Back to Top</button>
+        </div>
+
+        <div class="hint">
+          WhatsApp button can be added later (placeholder).
+        </div>
+      </form>
+    </section>
+
+    <footer class="footer">
+      <div class="footLeft">
+        <div class="footBrand">PLAYHAUZ</div>
+        <div class="footSub">Address: ABC, City (editable)</div>
+      </div>
+      <div class="footRight">
+        <div>Phone: 00000 00000</div>
+        <div class="small">© <span id="year"></span> PLAYHAUZ</div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
